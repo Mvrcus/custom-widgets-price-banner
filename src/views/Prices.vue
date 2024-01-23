@@ -49,9 +49,9 @@ const close = () => {
       Add Price
     </button>
   </div>
-  <div class="flex gap-2 pt-3 prices-container w-100">
+  <div class="gap-2 pt-3 prices-container w-full">
     <PriceCard
-      class="price-card"
+      class="price-card w-full mb-2"
       v-for="price in banners"
       :key="price.id"
       :price="price"
@@ -62,7 +62,8 @@ const close = () => {
 </template>
 
 <style>
-.price-card {
-  max-width: 200px;
-}
+/* .prices-container {
+  max-height: 400px;
+  overflow: scroll;
+} */
 </style>
