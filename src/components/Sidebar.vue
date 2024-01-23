@@ -11,10 +11,10 @@
                   isCurrentRoute(item.route)
                     ? 'bg-gray-800 text-white'
                     : 'text-gray-400 hover:text-white hover:bg-gray-800',
-                  'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold setting-item'
+                  'group flex items-center gap-x-3 rounded-md p-2 text-xs leading-6 font-semibold setting-item'
                 ]"
               >
-                <component :is="item.icon" class="h-6 w-6 shrink-0" aria-hidden="true" />
+                <component :is="item.icon" class="h-4 w-4 shrink-0" aria-hidden="true" />
                 {{ item.name }}
               </RouterLink>
             </li>
@@ -56,8 +56,8 @@ const previewMode = computed(() => {
 <style>
 .sidebar {
   height: 100vh;
-  min-width: 200px;
-  max-width: 25%;
+  min-width: 150px;
+  max-width: 15%;
 }
 .setting-item{
     text-decoration: none;
