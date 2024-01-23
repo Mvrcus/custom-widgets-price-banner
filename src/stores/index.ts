@@ -23,9 +23,8 @@ export const useStore = defineStore('store', () => {
   }
 
   const setItem = (key: string, value: Banner[] | string | number | boolean) => {
-    console.log('val', value)
     if (!Object.keys(state.value).includes(key)) {
-      console.error("Key doesn't exist in store!")
+      console.error("Key doesn't exist in store!", key)
       return
     }
     state.value[key] = value
@@ -53,5 +52,7 @@ export const useStore = defineStore('store', () => {
     return createHtml(state.value)
   })
 
-  return { state, getItem, setItem, html, js, body, css }
+  const handshake = undefined
+
+  return { state, getItem, setItem, html, js, body, css, handshake }
 })
