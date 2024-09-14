@@ -1,11 +1,11 @@
 <script setup lang="ts">
+import { cloneDeep } from 'lodash'
+import Postmate from 'postmate'
+import { computed, onMounted, watch } from 'vue'
 import { RouterView } from 'vue-router'
+import Preview from './components/Preview.vue'
 import Sidebar from './components/Sidebar.vue'
 import { useStore } from './stores'
-import Preview from './components/Preview.vue'
-import { computed, onMounted, watch } from 'vue'
-import Postmate from 'postmate'
-import { cloneDeep } from 'lodash'
 
 const store = useStore()
 
@@ -37,7 +37,7 @@ watch([body, js, css], () => {
   const handshake = store.handshake as any
   if (handshake) {
     handshake?.then((parent: any) => {
-      console.log('parent',parent, {
+      console.log('parent', parent, {
         html: store.html as string,
         js: store.js as string,
         elementStore: store.state
@@ -54,13 +54,21 @@ watch([body, js, css], () => {
 onMounted(() => {
   const handshake = new Postmate.Model({})
 
-  handshake.then(async ({ model }: any) => {
-    console.log('model', model)
-    if (model.elementStore) {
-      Object.keys(model.elementStore).map((key) => {
-        store.setItem(key, model.elementStore[key])
+  handshake.then(async (parent: any) => {
+    console.log('model', parent.model?.elementStore)
+
+    if (parent.model.elementStore) {
+      Object.keys(parent.model.elementStore).map((key) => {
+        store.setItem(key, parent.model.elementStore[key])
       })
     }
+
+    parent?.emit('code', {
+      html: store.html as string,
+      js: store.js as string,
+      elementStore: cloneDeep(store.state)
+    })
+
     store.handshake = handshake
   })
 })
@@ -69,7 +77,7 @@ onMounted(() => {
 <template>
   <div class="flex">
     <Sidebar />
-    <div class="settings-data flex grow flex-col overflow-y-auto px-2">
+    <div class="flex flex-col px-2 overflow-y-auto settings-data grow">
       <RouterView />
     </div>
   </div>
