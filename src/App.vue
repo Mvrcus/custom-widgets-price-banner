@@ -63,11 +63,14 @@ onMounted(() => {
       })
     }
 
-    parent?.emit('code', {
-      html: store.html as string,
-      js: store.js as string,
-      elementStore: cloneDeep(store.state)
-    })
+    if (!parent.model?.elementStore) {
+      // initial Preview
+      parent?.emit('code', {
+        html: store.html as string,
+        js: store.js as string,
+        elementStore: cloneDeep(store.state)
+      })
+    }
 
     store.handshake = handshake
   })
