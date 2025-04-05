@@ -20,11 +20,56 @@ export interface SettingOption {
   value: string | number
 }
 
+export interface Service {
+  name: string
+  icon: string
+  description: string
+  frequencies: {
+    [key: string]: string
+  }
+}
+
+export interface ServiceMetric {
+  value: number | string
+  unit: string
+  description: string
+}
+
+export interface ServiceMetrics {
+  [key: string]: {
+    [key: string]: {
+      [key: string]: ServiceMetric
+    }
+  }
+}
+
 export interface State {
-  [key: string]: Banner[] | string | number | boolean
+  [key: string]: any
+  selectedServices: {
+    [key: string]: string | null
+  }
+  activeMetricTab: string
+  expandedService: string | null
+  serviceDetails: {
+    [key: string]: {
+      description: string
+      frequencies: {
+        [key: string]: string
+      }
+    }
+  }
+  serviceMetrics: ServiceMetrics
+  services: Service[]
+  frequencies: string[]
+  pricingData: {
+    [key: string]: number
+  }
+  metricIcons: {
+    [key: string]: string
+  }
 }
 
 export interface Action {
-    type: string
-    url?: string
+  type: string
+  url?: string
 }
